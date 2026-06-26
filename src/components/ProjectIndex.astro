@@ -1,0 +1,20 @@
+---
+interface Link {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  links: Link[];
+}
+
+const { links } = Astro.props;
+---
+
+<nav class="project-index" aria-label="Project index">
+  {links.map((link) => (
+    <a href={`#${link.id}`} class="index-link" data-project={link.id}>
+      <span class="index-label">{link.label}</span>
+    </a>
+  ))}
+</nav>

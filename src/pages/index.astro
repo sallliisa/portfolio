@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectIndex from '../components/ProjectIndex.astro';
+
+// Import individual projects
+import Airwave from '../components/projects/Airwave.astro';
+import IsFramework from '../components/projects/IsFramework.astro';
+import LandingSveltekit from '../components/projects/LandingSveltekit.astro';
+import Apostle from '../components/projects/Apostle.astro';
+
+const projectLinks = [
+  { id: 'project-airwave', label: 'Airwave' },
+  { id: 'project-is-framework', label: 'is-framework' },
+  { id: 'project-landing-sveltekit-framework', label: 'landing-sveltekit' },
+  { id: 'project-apostle', label: 'apostle' }
+];
+---
+
+<Layout title="southneuhof">
+  <Airwave />
+  <IsFramework />
+  <LandingSveltekit />
+  <Apostle />
+  <ProjectIndex links={projectLinks} />
+</Layout>

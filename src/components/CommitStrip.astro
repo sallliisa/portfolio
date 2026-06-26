@@ -1,0 +1,62 @@
+---
+---
+<div class="commit-strip-wrapper" transition:persist="commit-strip-wrapper">
+  <div id="commit-strip" aria-label="Recent GitHub commit activity">
+    <!-- dots injected by JS -->
+  </div>
+</div>
+
+<script>
+  function initCommitStrip() {
+    const GITHUB_USER = 'sallliisa';
+    const API_URL = `https://github-contributions-api.jogruber.de/v4/${GITHUB_USER}?y=last`;
+    const strip = document.getElementById('commit-strip');
+
+    if (!strip || strip.children.length > 0) {
+      if (strip) {
+        const wrapper = strip.closest('.commit-strip-wrapper');
+        if (wrapper) {
+          wrapper.setAttribute('data-loaded', 'true');
+        }
+      }
+      return; // Already loaded or no strip element
+    }
+
+    function render(contributions) {
+      const fragment = document.createDocumentFragment();
+      contributions.forEach(function (entry, i) {
+        const slice = document.createElement('span');
+        slice.className = 'commit-slice';
+        slice.dataset.level = entry.level;
+        slice.dataset.date = entry.date;
+        slice.title = entry.date + ' — ' + entry.count + ' contribution' + (entry.count !== 1 ? 's' : '');
+        slice.style.animationDelay = (i * 2) + 'ms';
+        fragment.appendChild(slice);
+      });
+      strip.appendChild(fragment);
+
+      // Once the animation finishes (~742ms max delay + 300ms duration = 1042ms),
+      // set data-loaded="true" on the wrapper to prevent animation replay on navigation.
+      setTimeout(function () {
+        const wrapper = strip.closest('.commit-strip-wrapper');
+        if (wrapper) {
+          wrapper.setAttribute('data-loaded', 'true');
+        }
+      }, 1500);
+    }
+
+    fetch(API_URL)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data && data.contributions) {
+          render(data.contributions);
+        }
+      })
+      .catch(function () {
+        // Silently degrade
+      });
+  }
+
+  // Run on initial load and after view transitions
+  document.addEventListener('astro:page-load', initCommitStrip);
+</script>
