@@ -251,6 +251,7 @@ body {
   border-radius: 6px;
   object-fit: cover;
   opacity: 0;
+  height: auto;
 }
 
 .project.is-visible .project-img {
@@ -259,8 +260,8 @@ body {
 
 /* image 1 — top-right area, large */
 .project-img-1 {
-  width: clamp(200px, 30vw, 420px);
-  height: clamp(200px, 30vw, 420px);
+  width: clamp(280px, 38vw, 580px);
+  height: auto;
   top: 8%;
   right: 6%;
   rotate: 3deg;
@@ -270,8 +271,8 @@ body {
 
 /* image 2 — top-left area */
 .project-img-2 {
-  width: clamp(160px, 22vw, 320px);
-  height: clamp(160px, 22vw, 320px);
+  width: clamp(240px, 32vw, 480px);
+  height: auto;
   top: 6%;
   left: 4%;
   rotate: -4deg;
@@ -281,9 +282,8 @@ body {
 
 /* image 3 — center-right, slightly overlapping title */
 .project-img-3 {
-  width: clamp(180px, 26vw, 380px);
+  width: clamp(260px, 35vw, 540px);
   height: auto;
-  aspect-ratio: 1;
   top: 50%;
   right: 22%;
   translate: 0 -50%;
@@ -419,8 +419,8 @@ body {
 
   /* Scattered layout for Tablet */
   .project-img-1 {
-    width: clamp(320px, 45vw, 520px);
-    height: clamp(320px, 45vw, 520px);
+    width: clamp(380px, 50vw, 650px);
+    height: auto;
     top: 6%;
     right: 2%;
     rotate: 3deg;
@@ -428,8 +428,8 @@ body {
   }
 
   .project-img-2 {
-    width: clamp(260px, 38vw, 420px);
-    height: clamp(260px, 38vw, 420px);
+    width: clamp(320px, 44vw, 550px);
+    height: auto;
     top: 4%;
     left: 2%;
     rotate: -4deg;
@@ -437,9 +437,8 @@ body {
   }
 
   .project-img-3 {
-    width: clamp(280px, 42vw, 460px);
+    width: clamp(340px, 48vw, 580px);
     height: auto;
-    aspect-ratio: 1;
     top: 48%;
     left: 50%;
     right: auto;
@@ -487,24 +486,24 @@ body {
 
   /* Scattered layout for Mobile - positioned in top half to avoid overlap with bottom text */
   .project-img-1 {
-    width: 64vw;
-    height: 64vw;
+    width: 80vw;
+    height: auto;
     top: 5%;
     right: -6%;
     rotate: 3deg;
   }
 
   .project-img-2 {
-    width: 54vw;
-    height: 54vw;
+    width: 70vw;
+    height: auto;
     top: 4%;
     left: -6%;
     rotate: -4deg;
   }
 
   .project-img-3 {
-    width: 58vw;
-    height: 58vw;
+    width: 75vw;
+    height: auto;
     top: 25%;
     left: 50%;
     right: auto;

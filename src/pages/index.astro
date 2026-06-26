@@ -1,25 +1,33 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ProjectIndex from '../components/ProjectIndex.astro';
+import Layout from "../layouts/Layout.astro";
+import ProjectIndex from "../components/ProjectIndex.astro";
 
-// Import individual projects
-import Airwave from '../components/projects/Airwave.astro';
-import IsFramework from '../components/projects/IsFramework.astro';
-import LandingSveltekit from '../components/projects/LandingSveltekit.astro';
-import Apostle from '../components/projects/Apostle.astro';
+import Airwave from "../components/projects/Airwave.astro";
+import LandingSveltekit from "../components/projects/LandingSveltekit.astro";
+import IsFramework from "../components/projects/IsFramework.astro";
+import IsVueFramework from "../components/projects/IsVueFramework.astro";
+import IsDataModel from "../components/projects/IsDataModel.astro";
+import Utilities from "../components/projects/Utilities.astro";
+import Apostle from "../components/projects/Apostle.astro";
 
 const projectLinks = [
-  { id: 'project-airwave', label: 'Airwave' },
-  { id: 'project-is-framework', label: 'is-framework' },
-  { id: 'project-landing-sveltekit-framework', label: 'landing-sveltekit' },
-  { id: 'project-apostle', label: 'apostle' }
+  { id: "project-airwave", label: "airwave" },
+  { id: "project-landing-sveltekit-framework", label: "landing-sveltekit" },
+  { id: "project-is-framework", label: "is-framework" },
+  { id: "project-is-vue-framework", label: "is-vue-framework" },
+  { id: "project-is-data-model", label: "is-data-model" },
+  { id: "project-utilities", label: "utilities" },
+  { id: "project-apostle", label: "apostle" },
 ];
 ---
 
 <Layout title="southneuhof">
   <Airwave />
-  <IsFramework />
   <LandingSveltekit />
+  <IsFramework />
+  <IsVueFramework />
+  <IsDataModel />
+  <Utilities />
   <Apostle />
   <ProjectIndex links={projectLinks} />
 </Layout>

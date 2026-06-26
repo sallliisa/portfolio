@@ -1,46 +1,64 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ProjectIndex from '../components/ProjectIndex.astro';
+import Layout from "../layouts/Layout.astro";
+import ProjectIndex from "../components/ProjectIndex.astro";
 
 // Import individual projects
-import TollRoadOps from '../components/projects/TollRoadOps.astro';
-import MaintenanceGov from '../components/projects/MaintenanceGov.astro';
-import QhsseSys from '../components/projects/QhsseSys.astro';
-import ComplianceGov from '../components/projects/ComplianceGov.astro';
-import CorporateWebSystems from '../components/projects/CorporateWebSystems.astro';
-import ContractClaimMgmt from '../components/projects/ContractClaimMgmt.astro';
-import CustomerRelationshipMgmt from '../components/projects/CustomerRelationshipMgmt.astro';
-import KnowledgeReadinessPlatform from '../components/projects/KnowledgeReadinessPlatform.astro';
-import PropertyServicesPlatform from '../components/projects/PropertyServicesPlatform.astro';
-import InfrastructurePppFeasibility from '../components/projects/InfrastructurePppFeasibility.astro';
-import PublicInformationPortal from '../components/projects/PublicInformationPortal.astro';
+import TollRoadOps from "../components/projects/TollRoadOps.astro";
+import MaintenanceGov from "../components/projects/MaintenanceGov.astro";
+import QhsseSys from "../components/projects/QhsseSys.astro";
+import ComplianceGov from "../components/projects/ComplianceGov.astro";
+import CorporateWebSystems from "../components/projects/CorporateWebSystems.astro";
+import ContractClaimMgmt from "../components/projects/ContractClaimMgmt.astro";
+import CustomerRelationshipMgmt from "../components/projects/CustomerRelationshipMgmt.astro";
+import KnowledgeReadinessPlatform from "../components/projects/KnowledgeReadinessPlatform.astro";
+import PropertyServicesPlatform from "../components/projects/PropertyServicesPlatform.astro";
+import InfrastructurePppFeasibility from "../components/projects/InfrastructurePppFeasibility.astro";
+import PublicInformationPortal from "../components/projects/PublicInformationPortal.astro";
 
 const clientWorkLinks = [
-  { id: 'project-toll-road-ops', label: 'Toll Road Operations Management System' },
-  { id: 'project-maintenance-gov', label: 'Project & Maintenance Governance System' },
-  { id: 'project-qhsse-sys', label: 'Enterprise QHSSE Management System' },
-  { id: 'project-compliance-gov', label: 'ISO & Compliance Governance System' },
-  { id: 'project-corporate-web-systems', label: 'Corporate Web Presence' },
-  { id: 'project-contract-claim-mgmt', label: 'Contract & Claim Management' },
-  { id: 'project-customer-relationship-mgmt', label: 'Customer Relationship Management' },
-  { id: 'project-knowledge-readiness-platform', label: 'Knowledge & Readiness Platform' },
-  { id: 'project-property-services-platform', label: 'On-Demand Property Services Platform' },
-  { id: 'project-infrastructure-ppp-feasibility', label: 'PPP Feasibility Suite' },
-  { id: 'project-public-information-portal', label: 'Public Information Portal' }
+  { id: "project-toll-road-ops", label: "Toll Road Operations Management" },
+  { id: "project-maintenance-gov", label: "Project & Maintenance Governance" },
+  { id: "project-qhsse-sys", label: "Enterprise QHSSE Management" },
+  { id: "project-compliance-gov", label: "ISO & Compliance Governance" },
+  { id: "project-corporate-web-systems", label: "Corporate Web Presence" },
+  {
+    id: "project-public-information-portal",
+    label: "Public Information Portal",
+  },
+  { id: "project-contract-claim-mgmt", label: "Contract & Claim Management" },
+  {
+    id: "project-customer-relationship-mgmt",
+    label: "Customer Relationship Management",
+  },
+  {
+    id: "project-property-services-platform",
+    label: "On-Demand Property Services Platform",
+  },
+  {
+    id: "project-infrastructure-ppp-feasibility",
+    label: "PPP Feasibility Suite",
+  },
+  {
+    id: "project-knowledge-readiness-platform",
+    label: "Knowledge & Readiness Platform",
+  },
 ];
 ---
 
-<Layout title="southneuhof — client work" description="southneuhof — client work portfolio.">
+<Layout
+  title="southneuhof — client work"
+  description="southneuhof — client work portfolio."
+>
   <TollRoadOps />
   <MaintenanceGov />
   <QhsseSys />
   <ComplianceGov />
   <CorporateWebSystems />
+  <PublicInformationPortal />
   <ContractClaimMgmt />
   <CustomerRelationshipMgmt />
-  <KnowledgeReadinessPlatform />
   <PropertyServicesPlatform />
   <InfrastructurePppFeasibility />
-  <PublicInformationPortal />
+  <KnowledgeReadinessPlatform />
   <ProjectIndex links={clientWorkLinks} />
 </Layout>

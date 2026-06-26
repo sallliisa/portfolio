@@ -1,25 +1,106 @@
 ---
-import ProjectSection from '../ProjectSection.astro';
+import ProjectSection from "../ProjectSection.astro";
 ---
 
 <ProjectSection
   id="project-is-framework"
   title="is-framework"
   images={[
-    "/images/is-framework-code.png",
-    "/images/is-framework-dashboard.png",
-    "/images/is-framework-mobile.png"
+    // "/images/is-framework-dashboard.png",
+    // "/images/is-framework-code.png",
+    // "/images/is-framework-mobile.png",
   ]}
 >
   <p>
-    Canonical monorepo framework for South Neuhof information system
-    frontends. Standardized on pnpm workspaces, Vite, and Turbo, it
-    provides the core infrastructure for scalable Vue 3 and Expo
-    mobile client applications.
+    Canonical monorepo framework for South Neuhof information system frontends.
+    Standardized on pnpm workspaces, Vite, and Turbo, it provides the core
+    infrastructure for scalable Vue 3 and Expo mobile client applications.
   </p>
   <p>
-    Publishes shared model schemas, API contracts, and components
-    under the @southneuhof scope. Enables source-first development
-    with Vite HMR mappings and strict package boundary checks.
+    Publishes shared model schemas, API contracts, and components under the
+    @southneuhof scope. Enables source-first development with Vite HMR mappings
+    and strict package boundary checks.
   </p>
+
+  <div class="ecosystem-container">
+    <div class="ecosystem-title">broader project parts:</div>
+    <div class="ecosystem-grid">
+      <a href="#project-is-vue-framework" class="ecosystem-card">
+        <span class="ecosystem-card-title">is-vue-framework</span>
+        <span class="ecosystem-card-desc">Vue 3 primitives & layout engine</span
+        >
+      </a>
+      <a href="#project-is-data-model" class="ecosystem-card">
+        <span class="ecosystem-card-title">is-data-model</span>
+        <span class="ecosystem-card-desc">Unified schemas & API contracts</span>
+      </a>
+      <a href="#project-utilities" class="ecosystem-card">
+        <span class="ecosystem-card-title">utilities</span>
+        <span class="ecosystem-card-desc"
+          >Shared helpers & package boundaries</span
+        >
+      </a>
+      <a href="#project-apostle" class="ecosystem-card">
+        <span class="ecosystem-card-title">apostle</span>
+        <span class="ecosystem-card-desc">Type-safe HTTP client wrapper</span>
+      </a>
+    </div>
+  </div>
 </ProjectSection>
+
+<style>
+  .ecosystem-container {
+    margin-top: 32px;
+    border-top: 1px solid var(--fg-20);
+    padding-top: 24px;
+  }
+
+  .ecosystem-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg-50);
+    margin-bottom: 16px;
+  }
+
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .ecosystem-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    border: 1px solid var(--fg-20);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .ecosystem-card:hover {
+    border-color: var(--fg);
+    background: rgba(232, 228, 222, 0.03);
+  }
+
+  .ecosystem-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .ecosystem-card-desc {
+    font-size: 11px;
+    color: var(--fg-50);
+  }
+
+  /* Responsive styles for smaller screens */
+  @media (max-width: 640px) {
+    .ecosystem-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
