@@ -27,6 +27,37 @@
     strip.appendChild(fragment);
   }
 
+  // ---- scroll reveal & floating index tracking ----
+
+  var projects = document.querySelectorAll('.project');
+  var indexLinks = document.querySelectorAll('.index-link');
+  var observerOptions = {
+    root: null,
+    rootMargin: '-30% 0px -30% 0px',
+    threshold: 0.1
+  };
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+
+        var projectId = entry.target.id;
+        indexLinks.forEach(function (link) {
+          if (link.getAttribute('data-project') === projectId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  projects.forEach(function (project) {
+    observer.observe(project);
+  });
+
   // ---- go ----
 
   fetch(API_URL)

@@ -24,6 +24,8 @@ html {
   color: var(--fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -33,37 +35,128 @@ body {
 /* ---- header ---- */
 
 #site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   height: 48px;
   padding: 0 24px;
-  overflow: hidden;
+  overflow: visible; /* Allow progressive blur below the header to be visible */
+  background: transparent; /* Keep background transparent */
+}
+
+.header-left {
+  position: relative;
+  z-index: 3; /* Above the backdrop and commit strip */
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 #site-name {
-  position: relative;
-  z-index: 2;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.03em;
   color: var(--fg);
   white-space: nowrap;
-  /* subtle bg bleed to help name read over dots if they overlap */
-  background: var(--bg);
-  padding-right: 16px;
+  background: transparent; /* Keep background transparent */
+  text-decoration: none;
+}
+
+#site-name::after {
+  content: "/";
+  margin-left: 16px;
+  color: var(--fg-20);
+  pointer-events: none;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-link {
+  font-family: var(--mono);
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--fg-50);
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--fg);
+}
+
+.nav-link.active {
+  color: var(--fg);
+  font-weight: 500;
 }
 
 /* ---- commit strip ---- */
+
+.commit-strip-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px; /* Make it taller, matching the progressive blur extension */
+  z-index: 2;
+  pointer-events: none;
+
+  /* Progressive vertical mask applied to the commit strip only (starts fading at 60%) */
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}
 
 #commit-strip {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: stretch;
+  pointer-events: auto; /* Re-enable pointer events for commit slice tooltips */
   /* fade to transparent on the left */
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 60%);
   mask-image: linear-gradient(to right, transparent 0%, black 60%);
+}
+
+/* ---- progressive blur (positioned between topbar and content) ---- */
+
+.header-blur-extension {
+  position: absolute;
+  top: 0; /* Align with top of header */
+  left: 0;
+  right: 0;
+  height: 96px; /* Taller element so the clipping boundary is invisible */
+  z-index: 1; /* Sits between the topbar foreground and content */
+  pointer-events: none; /* Make click-through */
+
+  /* Single-layer backdrop blur: avoids horizontal seams/banding */
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+
+  /* Curved ease-out mask to create a feather-soft progressive blur transition */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0px,
+    black 24px,
+    rgba(0, 0, 0, 0.7) 48px,
+    rgba(0, 0, 0, 0.3) 64px,
+    rgba(0, 0, 0, 0.08) 76px,
+    transparent 84px,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0px,
+    black 24px,
+    rgba(0, 0, 0, 0.7) 48px,
+    rgba(0, 0, 0, 0.3) 64px,
+    rgba(0, 0, 0, 0.08) 76px,
+    transparent 84px,
+    transparent 100%
+  );
 }
 
 .commit-slice {
@@ -114,6 +207,9 @@ body {
   justify-content: center;
   overflow: hidden;
   padding: 48px 24px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  scroll-margin-top: 48px;
 }
 
 /* ---- scattered images (behind title) ---- */
@@ -129,6 +225,9 @@ body {
   border-radius: 6px;
   object-fit: cover;
   opacity: 0;
+}
+
+.project.is-visible .project-img {
   animation: img-drift-in 1.2s ease-out forwards;
 }
 
@@ -191,7 +290,7 @@ body {
 
 .project-title {
   font-family: var(--mono);
-  font-size: clamp(3rem, 18vw, 14rem);
+  font-size: clamp(3rem, 10vw, 10rem);
   font-weight: 500;
   line-height: 0.85;
   letter-spacing: -0.04em;
@@ -199,6 +298,8 @@ body {
   margin-bottom: 40px;
   /* text cuts through images */
   mix-blend-mode: difference;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .project-desc {
@@ -252,6 +353,11 @@ body {
   .project-desc {
     max-width: 100%;
   }
+
+  .project-title {
+    font-size: clamp(2.5rem, 11vw, 6rem);
+    margin-bottom: 32px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -264,11 +370,101 @@ body {
   }
 
   .project-title {
-    font-size: clamp(2.5rem, 22vw, 8rem);
+    font-size: clamp(2rem, 12vw, 4rem);
     margin-bottom: 24px;
   }
 
   .project-desc p {
     font-size: 12px;
+  }
+}
+
+/* ---- floating project index ---- */
+
+.project-index {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  pointer-events: auto;
+}
+
+.index-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-decoration: none;
+  color: var(--fg-50);
+  transition: all 0.3s ease;
+  position: relative;
+  padding-right: 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* A subtle dot next to each index link that expands when active */
+.index-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--fg-50);
+  transition: all 0.3s ease;
+}
+
+.index-link:hover {
+  color: var(--fg);
+}
+
+.index-link:hover::after {
+  background: var(--fg);
+}
+
+.index-link.active {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.index-link.active::after {
+  background: var(--fg);
+  transform: scale(1.5);
+}
+
+.index-label {
+  opacity: 0;
+  transform: translateX(8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  white-space: nowrap;
+}
+
+/* Reveal all labels when hovering the index area */
+.project-index:hover .index-label {
+  opacity: 0.45;
+  transform: translateX(0);
+}
+
+/* Fully highlight the hovered link label */
+.index-link:hover .index-label {
+  opacity: 1 !important;
+  color: var(--fg);
+}
+
+/* Muted highlight for active project label when index is hovered */
+.project-index:hover .index-link.active .index-label {
+  color: var(--fg);
+  opacity: 0.8;
+}
+
+/* Hide on medium and small screens where space is tight */
+@media (max-width: 1024px) {
+  .project-index {
+    display: none;
   }
 }
