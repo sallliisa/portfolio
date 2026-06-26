@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>southneuhof</title>
+  <meta name="description" content="southneuhof — builder.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="site-header">
+    <span id="site-name">southneuhof</span>
+    <div id="commit-strip" aria-label="Recent GitHub commit activity">
+      <!-- dots injected by JS -->
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="project" id="project-airwave">
+      <div class="project-images" aria-hidden="true">
+        <img src="images/airwave-spatial.png" alt="" class="project-img project-img-1">
+        <img src="images/airwave-headphones.png" alt="" class="project-img project-img-2">
+        <img src="images/airwave-settings.png" alt="" class="project-img project-img-3">
+      </div>
+      <div class="project-content">
+        <h1 class="project-title" id="project-title-airwave">Airwave</h1>
+        <div class="project-desc">
+          <p>A macOS application that provides system-wide spatial audio through headphones using HRIR convolution. Built as a free, customizable alternative to proprietary spatial audio solutions — because tools like these shouldn't cost a subscription.</p>
+          <p>Routes all system audio through a real-time convolution pipeline at ~0.1% CPU. Compatible with HeSuVi HRIR presets. Written in Swift.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
