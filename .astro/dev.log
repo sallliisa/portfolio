@@ -25,3 +25,6 @@
 {"message":"src/layouts/Layout.astro","label":"watch","level":"info"}
 {"message":"[200] / 21ms","label":null,"level":"info"}
 {"message":"[200] /client-work 21ms","label":null,"level":"info"}
+{"message":"/src/styles/global.css","label":"watch","level":"info"}
+{"message":"/src/styles/global.css","label":"watch","level":"info"}
+{"message":"[200] / 33ms","label":null,"level":"info"}

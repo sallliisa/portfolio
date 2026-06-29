@@ -122,7 +122,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 64px; /* Make it taller, matching the progressive blur extension */
+  height: 64px;
   z-index: 2;
   pointer-events: none;
 
@@ -142,40 +142,68 @@ body {
   mask-image: linear-gradient(to right, transparent 0%, black 60%);
 }
 
-/* ---- progressive blur (positioned between topbar and content) ---- */
+/* ---- progressive blur (between topbar and content) ---- */
 
 .header-blur-extension {
   position: absolute;
-  top: 0; /* Align with top of header */
+  top: 0;
   left: 0;
   right: 0;
-  height: 96px; /* Taller element so the clipping boundary is invisible */
-  z-index: 1; /* Sits between the topbar foreground and content */
-  pointer-events: none; /* Make click-through */
+  height: 180px;
+  z-index: 1;
+  pointer-events: none;
+}
 
-  /* Single-layer backdrop blur: avoids horizontal seams/banding */
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+.header-blur-extension::before,
+.header-blur-extension::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 
-  /* Curved ease-out mask to create a feather-soft progressive blur transition */
+.header-blur-extension::before {
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0px,
-    black 24px,
-    rgba(0, 0, 0, 0.7) 48px,
-    rgba(0, 0, 0, 0.3) 64px,
-    rgba(0, 0, 0, 0.08) 76px,
-    transparent 84px,
+    black 42px,
+    rgba(0, 0, 0, 0.62) 74px,
+    rgba(0, 0, 0, 0.18) 112px,
+    transparent 146px,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     black 0px,
-    black 24px,
-    rgba(0, 0, 0, 0.7) 48px,
-    rgba(0, 0, 0, 0.3) 64px,
-    rgba(0, 0, 0, 0.08) 76px,
-    transparent 84px,
+    black 42px,
+    rgba(0, 0, 0, 0.62) 74px,
+    rgba(0, 0, 0, 0.18) 112px,
+    transparent 146px,
+    transparent 100%
+  );
+}
+
+.header-blur-extension::after {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0px,
+    rgba(0, 0, 0, 0.5) 96px,
+    rgba(0, 0, 0, 0.16) 140px,
+    transparent 178px,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0px,
+    rgba(0, 0, 0, 0.5) 96px,
+    rgba(0, 0, 0, 0.16) 140px,
+    transparent 178px,
     transparent 100%
   );
 }
