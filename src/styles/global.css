@@ -254,6 +254,11 @@ body {
   opacity: 0;
   height: auto;
   --image-pop-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --parallax-x: 0px;
+  --parallax-y: 0px;
+  --parallax-rotate: 0deg;
+  transform: translate3d(var(--parallax-x), var(--parallax-y), 0) rotate(var(--parallax-rotate));
+  will-change: transform;
 }
 
 .project.is-visible .project-img {
@@ -390,6 +395,8 @@ body {
     animation: none;
     opacity: 1;
     filter: brightness(0.35);
+    transform: none;
+    will-change: auto;
   }
 }
 
@@ -459,6 +466,8 @@ body {
       animation: none;
       opacity: 1;
       filter: brightness(0.42);
+      transform: none;
+      will-change: auto;
     }
   }
 }
@@ -522,6 +531,8 @@ body {
       animation: none;
       opacity: 1;
       filter: brightness(0.32);
+      transform: none;
+      will-change: auto;
     }
   }
 }

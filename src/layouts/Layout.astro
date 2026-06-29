@@ -64,8 +64,175 @@ const { title, description = 'southneuhof — builder.' } = Astro.props;
         });
       }
 
+      function initProjectParallax() {
+        if (window.__projectParallaxCleanup) {
+          window.__projectParallaxCleanup();
+        }
+
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const projects = Array.from(document.querySelectorAll('.project'));
+        const images = Array.from(document.querySelectorAll('.project-img'));
+        const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+        const visibleProjects = new Set();
+        const state = {
+          targetX: 0,
+          targetY: 0,
+          currentX: 0,
+          currentY: 0,
+          rafId: 0,
+          isRunning: false
+        };
+
+        const imageProfiles = [
+          { x: 12, y: 8, rotate: 0.45 },
+          { x: 8, y: 6, rotate: 0.35 },
+          { x: 6, y: 4, rotate: 0.25 }
+        ];
+
+        function resetImages() {
+          images.forEach(function (image) {
+            image.style.removeProperty('--parallax-x');
+            image.style.removeProperty('--parallax-y');
+            image.style.removeProperty('--parallax-rotate');
+          });
+        }
+
+        function getImageProfile(image) {
+          if (image.classList.contains('project-img-2')) {
+            return imageProfiles[1];
+          }
+
+          if (image.classList.contains('project-img-3')) {
+            return imageProfiles[2];
+          }
+
+          return imageProfiles[0];
+        }
+
+        function updateImages() {
+          state.currentX += (state.targetX - state.currentX) * 0.08;
+          state.currentY += (state.targetY - state.currentY) * 0.08;
+
+          visibleProjects.forEach(function (project) {
+            project.querySelectorAll('.project-img').forEach(function (image) {
+              const profile = getImageProfile(image);
+              image.style.setProperty('--parallax-x', (state.currentX * profile.x).toFixed(2) + 'px');
+              image.style.setProperty('--parallax-y', (state.currentY * profile.y).toFixed(2) + 'px');
+              image.style.setProperty('--parallax-rotate', (state.currentX * profile.rotate).toFixed(3) + 'deg');
+            });
+          });
+
+          if (
+            Math.abs(state.targetX - state.currentX) > 0.001 ||
+            Math.abs(state.targetY - state.currentY) > 0.001
+          ) {
+            state.rafId = window.requestAnimationFrame(updateImages);
+          } else {
+            state.isRunning = false;
+          }
+        }
+
+        function queueUpdate() {
+          if (!state.isRunning) {
+            state.isRunning = true;
+            state.rafId = window.requestAnimationFrame(updateImages);
+          }
+        }
+
+        function setTarget(x, y) {
+          state.targetX = Math.max(-1, Math.min(1, x));
+          state.targetY = Math.max(-1, Math.min(1, y));
+          queueUpdate();
+        }
+
+        function handlePointerMove(event) {
+          setTarget(
+            (event.clientX / window.innerWidth - 0.5) * 2,
+            (event.clientY / window.innerHeight - 0.5) * 2
+          );
+        }
+
+        function handleDeviceOrientation(event) {
+          if (event.gamma === null || event.beta === null) {
+            return;
+          }
+
+          setTarget(event.gamma / 18, (event.beta - 45) / 30);
+        }
+
+        function startOrientationTracking() {
+          window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
+        }
+
+        function requestOrientationPermission() {
+          const orientationEvent = window.DeviceOrientationEvent;
+
+          if (
+            orientationEvent &&
+            typeof orientationEvent.requestPermission === 'function'
+          ) {
+            orientationEvent.requestPermission()
+              .then(function (permission) {
+                if (permission === 'granted') {
+                  startOrientationTracking();
+                }
+              })
+              .catch(function () {});
+          } else if (orientationEvent) {
+            startOrientationTracking();
+          }
+        }
+
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              visibleProjects.add(entry.target);
+              queueUpdate();
+            } else {
+              visibleProjects.delete(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '20% 0px',
+          threshold: 0
+        });
+
+        if (motionQuery.matches || projects.length === 0 || images.length === 0) {
+          resetImages();
+          window.__projectParallaxCleanup = function () {};
+          return;
+        }
+
+        projects.forEach(function (project) {
+          observer.observe(project);
+          if (project.classList.contains('is-visible')) {
+            visibleProjects.add(project);
+          }
+        });
+
+        if (isCoarsePointer) {
+          window.addEventListener('pointerdown', requestOrientationPermission, { once: true, passive: true });
+        } else {
+          window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        }
+
+        window.__projectParallaxCleanup = function () {
+          observer.disconnect();
+          window.cancelAnimationFrame(state.rafId);
+          window.removeEventListener('pointermove', handlePointerMove);
+          window.removeEventListener('deviceorientation', handleDeviceOrientation);
+          window.removeEventListener('pointerdown', requestOrientationPermission);
+          state.isRunning = false;
+          resetImages();
+        };
+      }
+
       // Initialize on load and after page transitions
-      document.addEventListener('astro:page-load', initScrollObserver);
+      document.addEventListener('astro:page-load', function () {
+        initScrollObserver();
+        initProjectParallax();
+      });
     </script>
   </body>
 </html>

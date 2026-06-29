@@ -12,3 +12,12 @@
 {"message":"[200] /client-work 11ms","label":null,"level":"info"}
 {"message":"[200] / 7ms","label":null,"level":"info"}
 {"message":"[200] /client-work 6ms","label":null,"level":"info"}
+{"message":"/src/styles/global.css","label":"watch","level":"info"}
+{"message":"src/layouts/Layout.astro","label":"watch","level":"info"}
+{"message":"[200] /client-work 14ms","label":null,"level":"info"}
+{"message":"src/layouts/Layout.astro","label":"watch","level":"info"}
+{"message":"[200] /client-work 12ms","label":null,"level":"info"}
+{"message":"src/layouts/Layout.astro","label":"watch","level":"info"}
+{"message":"[200] /client-work 17ms","label":null,"level":"info"}
+{"message":"[200] / 24ms","label":null,"level":"info"}
+{"message":"[200] /client-work 5ms","label":null,"level":"info"}
