@@ -253,10 +253,11 @@ body {
   object-fit: cover;
   opacity: 0;
   height: auto;
+  --image-pop-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project.is-visible .project-img {
-  animation: img-drift-in 1.2s ease-out forwards;
+  animation: img-drift-in 1.2s var(--image-pop-ease) forwards;
 }
 
 /* image 1 — top-right area, large */
@@ -418,7 +419,7 @@ body {
   }
 
   .project.is-visible .project-img {
-    animation: img-drift-in-tablet 1.2s ease-out forwards;
+    animation: img-drift-in-tablet 1.2s var(--image-pop-ease) forwards;
   }
 
   /* Scattered layout for Tablet */
@@ -485,7 +486,7 @@ body {
   }
 
   .project.is-visible .project-img {
-    animation: img-drift-in-mobile 1.2s ease-out forwards;
+    animation: img-drift-in-mobile 1.2s var(--image-pop-ease) forwards;
   }
 
   /* Scattered layout for Mobile - positioned in top half to avoid overlap with bottom text */
